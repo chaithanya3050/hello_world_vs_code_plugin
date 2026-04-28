@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: '18.x'
+          node-version: '22.x'
 
       - name: Build and package extension
         run: |
@@ -28,7 +28,7 @@ jobs:
           fi
           npm ci
           npm run compile
-          npx vsce package
+          npx @vscode/vsce package
 
       - name: Upload VSIX artifact
         uses: actions/upload-artifact@v4
@@ -48,7 +48,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: '18.x'
+          node-version: '22.x'
 
       - name: Build and package extension
         run: |
@@ -57,7 +57,7 @@ jobs:
           fi
           npm ci
           npm run compile
-          npx vsce package
+          npx @vscode/vsce package
 
       - name: Publish release asset
         uses: softprops/action-gh-release@v1
