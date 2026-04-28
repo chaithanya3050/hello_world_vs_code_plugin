@@ -8,6 +8,10 @@ on:
     types:
       - published
 
+permissions:
+  contents: write
+  packages: write
+
 jobs:
   build:
     name: Build VS Code extension
@@ -60,7 +64,7 @@ jobs:
           npx @vscode/vsce package
 
       - name: Publish release asset
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: '**/hello-world-*.vsix'
         env:
