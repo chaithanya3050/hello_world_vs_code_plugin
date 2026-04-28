@@ -1,0 +1,42 @@
+{
+  "name": "hello-world",
+  "displayName": "Hello World Extension",
+  "description": "A simple working Hello World VS Code extension",
+  "version": "0.0.1",
+  "publisher": "Krishna",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": ["onCommand:hello-world.helloWorld"],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "hello-world.helloWorld",
+        "title": "Hello World: Show Message"
+      },
+      {
+        "command": "hello-world.showDate",
+        "title": "Hello World: Show Current Date"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "hello-world.helloWorld",
+        "key": "ctrl+shift+h",
+        "mac": "cmd+shift+h"
+      }
+    ]
+  },
+  "scripts": {
+    "vsce": "vsce",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.60.0",
+    "@types/node": "^12.11.7",
+    "typescript": "^4.4.3"
+  }
+}
