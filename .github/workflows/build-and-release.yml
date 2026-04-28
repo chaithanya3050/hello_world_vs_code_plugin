@@ -12,9 +12,6 @@ jobs:
   build:
     name: Build VS Code extension
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: hello-world-extension
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,29 +21,26 @@ jobs:
         with:
           node-version: '18.x'
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Compile TypeScript
-        run: npm run compile
-
-      - name: Package VSIX
-        run: npx vsce package
+      - name: Build and package extension
+        run: |
+          if [ -d hello-world-extension ]; then
+            cd hello-world-extension
+          fi
+          npm ci
+          npm run compile
+          npx vsce package
 
       - name: Upload VSIX artifact
         uses: actions/upload-artifact@v4
         with:
           name: hello-world-vsix
-          path: hello-world-*.vsix
+          path: '**/hello-world-*.vsix'
 
   release:
     name: Create GitHub release asset
     needs: build
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: hello-world-extension
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -56,20 +50,18 @@ jobs:
         with:
           node-version: '18.x'
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Compile TypeScript
-        run: npm run compile
-
-      - name: Package VSIX
-        run: npx vsce package
+      - name: Build and package extension
+        run: |
+          if [ -d hello-world-extension ]; then
+            cd hello-world-extension
+          fi
+          npm ci
+          npm run compile
+          npx vsce package
 
       - name: Publish release asset
         uses: softprops/action-gh-release@v1
         with:
-          files: hello-world-*.vsix
+          files: '**/hello-world-*.vsix'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
